@@ -69,6 +69,10 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="6kT-Xq-Wya">
                                 <rect key="frame" x="0.0" y="56" width="390" height="734"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <activityIndicatorView key="tableFooterView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" id="mu2-hB-zJ3">
+                                    <rect key="frame" x="0.0" y="149.33333206176758" width="390" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </activityIndicatorView>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TweetCell" rowHeight="82" id="v1J-0y-AfV" customClass="TweetCell">
                                         <rect key="frame" x="0.0" y="44.666666030883789" width="390" height="82"/>
@@ -163,7 +167,6 @@
                                                 <constraint firstItem="F9h-po-0YT" firstAttribute="leading" secondItem="1EY-A1-2cb" secondAttribute="trailing" constant="4" id="1cT-Hm-8y0"/>
                                                 <constraint firstItem="1EY-A1-2cb" firstAttribute="top" secondItem="bhO-CO-orD" secondAttribute="topMargin" id="5pb-aV-4qZ"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="pVe-HB-I8w" secondAttribute="bottom" constant="7" id="7QK-3e-Uou"/>
-                                                <constraint firstItem="pVe-HB-I8w" firstAttribute="leading" secondItem="VCV-rd-TVE" secondAttribute="trailing" constant="26" id="Bvj-zX-h7W"/>
                                                 <constraint firstItem="VCV-rd-TVE" firstAttribute="leading" secondItem="PWa-tv-U5j" secondAttribute="trailing" constant="4" id="IXH-oU-Eru"/>
                                                 <constraint firstItem="h1S-cX-MTA" firstAttribute="centerY" secondItem="VCV-rd-TVE" secondAttribute="centerY" id="K9J-TE-eaF"/>
                                                 <constraint firstItem="gzx-tE-jOu" firstAttribute="leading" secondItem="cel-JD-VW2" secondAttribute="trailing" constant="12" id="NnV-bF-rrc"/>
@@ -182,15 +185,18 @@
                                                 <constraint firstItem="1EY-A1-2cb" firstAttribute="leading" secondItem="cel-JD-VW2" secondAttribute="trailing" constant="12" id="sHM-q2-Nl4"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="NRP-Ln-E9h" secondAttribute="trailing" constant="1" id="was-3i-YXD"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="gzx-tE-jOu" secondAttribute="bottom" constant="2" id="xlW-U3-ac1"/>
+                                                <constraint firstItem="pVe-HB-I8w" firstAttribute="leading" secondItem="VCV-rd-TVE" secondAttribute="trailing" constant="26" id="zVa-Qt-oid"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="dateLabel" destination="t6m-9S-Chn" id="f3f-VZ-Ysj"/>
                                             <outlet property="likeButton" destination="pVe-HB-I8w" id="wC8-tI-uuJ"/>
+                                            <outlet property="likeCountLabel" destination="h1S-cX-MTA" id="qeG-6X-Zf0"/>
                                             <outlet property="messageButton" destination="TKP-Zg-WFQ" id="jT1-rS-TJy"/>
                                             <outlet property="nameLabel" destination="1EY-A1-2cb" id="gVZ-nI-1ze"/>
                                             <outlet property="profileView" destination="cel-JD-VW2" id="Prj-Hw-Jm3"/>
                                             <outlet property="replyButton" destination="gzx-tE-jOu" id="ZbQ-N9-bVI"/>
+                                            <outlet property="retweetCountLabel" destination="VCV-rd-TVE" id="oLI-gE-VDD"/>
                                             <outlet property="retweetbutton" destination="PWa-tv-U5j" id="n3F-9i-5Un"/>
                                             <outlet property="tweetLabel" destination="NRP-Ln-E9h" id="7Ze-ss-PHX"/>
                                             <outlet property="userLabel" destination="F9h-po-0YT" id="Sif-nl-Big"/>
@@ -222,6 +228,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="mu2-hB-zJ3" id="amS-0r-8Xj"/>
                         <outlet property="tableView" destination="6kT-Xq-Wya" id="ka2-a9-Cfn"/>
                     </connections>
                 </viewController>
