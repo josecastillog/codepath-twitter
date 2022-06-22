@@ -28,6 +28,9 @@
     if (_tweet.favorited == YES) {
         [self.likeButton setImage:[UIImage imageNamed:@"favor-icon-red.png"] forState:UIControlStateNormal];
     }
+    if (_tweet.retweeted == YES) {
+        [self.retweetbutton setImage:[UIImage imageNamed:@"retweet-icon-green.png.png"] forState:UIControlStateNormal];
+    }
     
     NSString *URLString = tweet.user.profilePicture;
     NSURL *url = [NSURL URLWithString:URLString];
@@ -80,7 +83,36 @@
              }
          }];
     }
-    
+}
+
+- (IBAction)didTapRetweet:(id)sender {
+    if (self.tweet.retweeted == NO) {
+        self.tweet.retweeted = YES;
+        self.tweet.retweetCount += 1;
+        [[APIManager shared] retweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
+             if(error){
+                  NSLog(@"Error retweeting tweet: %@", error.localizedDescription);
+             }
+             else{
+                 NSLog(@"Successfully retweeting the following Tweet: %@", tweet.text);
+                 [self.retweetbutton setImage:[UIImage imageNamed:@"retweet-icon-green.png"] forState:UIControlStateNormal];
+                 [self refreshData];
+             }
+         }];
+    } else {
+        self.tweet.retweeted = NO;
+        self.tweet.retweetCount -= 1;
+        [[APIManager shared] unretweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
+             if(error){
+                  NSLog(@"Error unretweeting tweet: %@", error.localizedDescription);
+             }
+             else{
+                 NSLog(@"Successfully unretweeted the following Tweet: %@", tweet.text);
+                 [self.retweetbutton setImage:[UIImage imageNamed:@"retweet-icon.png"] forState:UIControlStateNormal];
+                 [self refreshData];
+             }
+         }];
+    }
 }
 
 - (void)refreshData {

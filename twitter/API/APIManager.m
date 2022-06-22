@@ -101,4 +101,33 @@ static NSString * const baseURLString = @"https://api.twitter.com";
     }];
 }
 
+- (void)retweet:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion {
+
+    NSString *urlNoId = @"1.1/statuses/retweet/";
+    NSDictionary *parameters = @{@"id": tweet.idStr};
+    NSString *urlString = [NSString stringWithFormat:@"%@%@%@", urlNoId, tweet.idStr, @".json"];
+    NSLog(@"%@", urlString);
+    [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
+        Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
+        completion(tweet, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+}
+
+- (void)unretweet:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion {
+
+    NSString *urlNoId = @"1.1/statuses/unretweet/";
+    NSDictionary *parameters = @{@"id": tweet.idStr};
+    NSString *urlString = [NSString stringWithFormat:@"%@%@%@", urlNoId, tweet.idStr, @".json"];
+    [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
+        Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
+        completion(tweet, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+}
+
+
+
 @end
