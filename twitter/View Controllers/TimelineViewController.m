@@ -24,9 +24,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(beginRefresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:refreshControl atIndex:0];
+    
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    self.arrayOfTweets = [[NSMutableArray alloc] init];
+    // self.arrayOfTweets = [[NSMutableArray alloc] init];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // Get timeline
@@ -34,13 +38,7 @@
         if (tweets) {
             NSLog(@"😎😎😎 Successfully loaded home timeline");
             self.arrayOfTweets = [NSMutableArray arrayWithArray:tweets];
-            
-            for (Tweet *tweet in self.arrayOfTweets){
-                NSLog(@"%@", tweet.text);
-            }
-            
             [self.tableView reloadData];
-            
         } else {
             NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
         }
@@ -70,6 +68,19 @@
     Tweet *tweet = self.arrayOfTweets[indexPath.row];
     cell.tweet = tweet;
     return cell;
+}
+
+- (void)beginRefresh:(UIRefreshControl *)refreshControl {
+    [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
+        if (tweets) {
+            NSLog(@"😎😎😎 Successfully loaded home timeline");
+            self.arrayOfTweets = [NSMutableArray arrayWithArray:tweets];
+            [self.tableView reloadData];
+            [refreshControl endRefreshing];
+        } else {
+            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+        }
+    }];
 }
 
 /*

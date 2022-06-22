@@ -18,7 +18,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 
@@ -27,7 +26,7 @@
     
     NSString *URLString = tweet.user.profilePicture;
     NSURL *url = [NSURL URLWithString:URLString];
-    // NSData *urlData = [NSData dataWithContentsOfURL:url];
+    
     [self.profileView setImageWithURL:url]; // TODO: Figure out how to use urlData
     [self.replyButton setTitle:@"" forState:UIControlStateNormal];
     [self.retweetbutton setTitle:@"" forState:UIControlStateNormal];
