@@ -11,10 +11,11 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "Tweet.h"
-#include "TweetCell.h"
+#import "TweetCell.h"
+#import "ComposeViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface TimelineViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface TimelineViewController () <UITableViewDataSource, UITableViewDelegate, ComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
@@ -30,7 +31,7 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    // self.arrayOfTweets = [[NSMutableArray alloc] init];
+    self.arrayOfTweets = [[NSMutableArray alloc] init];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // Get timeline
@@ -83,15 +84,20 @@
     }];
 }
 
-/*
+- (void)didTweet:(Tweet *)tweet {
+    NSLog(@"Got called");
+    [self.arrayOfTweets insertObject:tweet atIndex:0];
+    [self.tableView reloadData];
+}
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    UINavigationController *navigationController = [segue destinationViewController];
+    ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
+    composeController.delegate = self;
 }
-*/
-
 
 @end
