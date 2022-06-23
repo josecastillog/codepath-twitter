@@ -47,6 +47,7 @@
         // Configure output format
         formatter.dateStyle = NSDateFormatterShortStyle;
         formatter.timeStyle = NSDateFormatterNoStyle;
+        self.createdAt = date;
         // Convert Date to String
         self.createdAtString = [formatter stringFromDate:date];
         

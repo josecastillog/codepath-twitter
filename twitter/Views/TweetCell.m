@@ -9,6 +9,7 @@
 #import "TweetCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "APIManager.h"
+#import "DateTools.h"
 
 @implementation TweetCell
 
@@ -46,6 +47,7 @@
     self.userLabel.text = userWithAt;
     self.nameLabel.text = tweet.user.name; // TODO: Change label names
     self.tweetLabel.text = tweet.text;
+    self.dateLabel.text = [NSDate shortTimeAgoSinceDate:tweet.createdAt]; // TODO: Date Label Not Working
     self.retweetCountLabel.text = [NSString stringWithFormat:@"%d", tweet.retweetCount];
     self.likeCountLabel.text = [NSString stringWithFormat:@"%d", tweet.favoriteCount];
     self.profileView.layer.backgroundColor=[[UIColor clearColor] CGColor];
