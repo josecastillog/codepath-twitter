@@ -20,7 +20,6 @@
         if (originalTweet != nil) {
             NSDictionary *userDictionary = dictionary[@"user"];
             self.retweetedByUser = [[User alloc] initWithDictionary:userDictionary];
-
             // Change tweet to original tweet
             dictionary = originalTweet;
         }

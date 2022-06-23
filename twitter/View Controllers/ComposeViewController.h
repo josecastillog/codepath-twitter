@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#include "Tweet.h"
+#import "Tweet.h"
 
 NS_ASSUME_NONNULL_BEGIN
 @protocol ComposeViewControllerDelegate

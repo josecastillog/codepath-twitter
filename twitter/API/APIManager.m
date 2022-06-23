@@ -65,6 +65,20 @@ static NSString * const baseURLString = @"https://api.twitter.com";
     
 }
 
+- (void)getProfilePicture:(void(^)(NSString *profilePicUrl, NSError *error))completion {
+    [self GET:@"1.1/account/verify_credentials.json"
+       parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
+            // Success
+            NSDictionary *dictionary = tweetDictionaries;
+            NSString *profilePicUrl = dictionary[@"profile_image_url_https"];
+            completion(profilePicUrl, nil);
+       } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+           // There was a problem
+           completion(nil, error);
+    }];
+    
+}
+
 - (void)postStatusWithText:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion {
     NSString *urlString = @"1.1/statuses/update.json";
     NSDictionary *parameters = @{@"status": text};

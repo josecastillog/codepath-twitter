@@ -8,26 +8,48 @@
 
 #import "ComposeViewController.h"
 #import "APIManager.h"
+#import "UIImageView+AFNetworking.h"
+#import <QuartzCore/QuartzCore.h>
 
-@interface ComposeViewController ()
+@interface ComposeViewController () <UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextView *textField;
-
+@property (weak, nonatomic) IBOutlet UIImageView *profileView;
+@property (strong, nonatomic) NSString *profilePicUrl;
 @end
 
 @implementation ComposeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.textField.delegate = self;
     // Do any additional setup after loading the view.
+    [[APIManager shared] getProfilePicture:^(NSString *profilePicUrl, NSError *error) {
+        if (profilePicUrl) {
+            NSLog(@"%@", profilePicUrl);
+            NSString *URLString = profilePicUrl;
+            NSURL *url = [NSURL URLWithString:URLString];
+            self.profileView.layer.backgroundColor=[[UIColor clearColor] CGColor];
+            self.profileView.layer.cornerRadius = self.profileView.frame.size.height/2;
+            self.profileView.layer.borderWidth = 0;
+            self.profileView.clipsToBounds = YES;
+            [self.profileView setImageWithURL:url];
+        } else {
+            NSLog(@"😫😫😫 Error getting profile pic: %@", error.localizedDescription);
+        }
+    }];
 }
 
 - (IBAction)close:(id)sender {
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    self.textField.text = @"";
+    self.textField.textColor = [UIColor blackColor];
+}
+
 - (IBAction)tweet:(id)sender {
     NSString *composedTweet = self.textField.text;
-    NSLog(@"%@", composedTweet);
     [[APIManager shared] postStatusWithText:(composedTweet) completion:^(Tweet *tweet, NSError *error) {
         if(error){
                 NSLog(@"Error composing Tweet: %@", error.localizedDescription);
@@ -40,6 +62,7 @@
     }];
     
 }
+
 
 
 /*

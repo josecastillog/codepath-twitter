@@ -21,5 +21,6 @@
 - (void)retweet:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion;
 - (void)unretweet:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender;
+- (void)getProfilePicture:(void(^)(NSString *profilePic, NSError *error))completion;
 
 @end
