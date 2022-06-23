@@ -36,7 +36,7 @@
         [self.likeButton setImage:[UIImage imageNamed:@"favor-icon-red.png"] forState:UIControlStateNormal];
     }
     if (_tweet.retweeted == YES) {
-        [self.retweetButton setImage:[UIImage imageNamed:@"retweet-icon-green.png.png"] forState:UIControlStateNormal];
+        [self.retweetButton setImage:[UIImage imageNamed:@"retweet-icon-green.png"] forState:UIControlStateNormal];
     }
     
     NSString *URLString = self.tweet.user.profilePicture;
