@@ -17,9 +17,10 @@
 #import "ProfileViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface TimelineViewController () <UITableViewDataSource, UITableViewDelegate, ComposeViewControllerDelegate, DetailsViewControllerDelegate, ProfileViewControllerDelegate>
+@interface TimelineViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ComposeViewControllerDelegate, DetailsViewControllerDelegate, ProfileViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property BOOL isMoreDataLoading;
 @end
 
 @implementation TimelineViewController
@@ -72,6 +73,42 @@
     cell.tweet = tweet;
     cell.delegate = self;
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.row + 1 == [self.arrayOfTweets count]){
+        [self loadMoreData: (int)self.arrayOfTweets.count + 20];
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if(!self.isMoreDataLoading) {
+        // Calculate the position of one screen length before the bottom of the results
+        int scrollViewContentHeight = self.tableView.contentSize.height;
+        int scrollOffsetThreshold = scrollViewContentHeight - self.tableView.bounds.size.height;
+        
+        // When the user has scrolled past the threshold, start requesting
+        if(scrollView.contentOffset.y > scrollOffsetThreshold && self.tableView.isDragging) {
+            self.isMoreDataLoading = true;
+            [self loadMoreData: (int)self.arrayOfTweets.count + 20];
+        }
+    }
+}
+
+-(void)loadMoreData:(int)count {
+    // Get timeline
+    if (self.isMoreDataLoading == false) {
+        [[APIManager shared] getHomeTimelineWithMoreTweets:(count) completion:^(NSArray *tweets, NSError *error) {
+            if (tweets) {
+                NSLog(@"😎😎😎 Successfully loaded home timeline");
+                self.isMoreDataLoading = false;
+                self.arrayOfTweets = [NSMutableArray arrayWithArray:tweets];
+                [self.tableView reloadData];
+            } else {
+                NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+            }
+        }];
+    }
 }
 
 - (void)beginRefresh:(UIRefreshControl *)refreshControl {

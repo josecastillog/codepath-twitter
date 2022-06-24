@@ -23,4 +23,5 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender;
 - (void)getProfilePicture:(void(^)(NSString *profilePic, NSError *error))completion;
 - (void)getProfileData:(User *)user completion:(void(^)(NSArray *userData, NSError *error))completion;
+- (void)getHomeTimelineWithMoreTweets:(int)count completion:(void(^)(NSArray *tweets, NSError *error))completion;
 @end

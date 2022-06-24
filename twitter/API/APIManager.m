@@ -65,6 +65,21 @@ static NSString * const baseURLString = @"https://api.twitter.com";
     
 }
 
+- (void)getHomeTimelineWithMoreTweets:(int)count completion:(void(^)(NSArray *tweets, NSError *error))completion {
+    NSString *urlWithoutCount = @"1.1/statuses/home_timeline.json?count=";
+    NSString *url = [NSString stringWithFormat:@"%@%@", urlWithoutCount, [NSString stringWithFormat:@"%d", count]];
+    [self GET:url
+       parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
+           // Success
+           NSMutableArray *tweets = [Tweet tweetsWithArray:tweetDictionaries];
+           completion(tweets, nil);
+       } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+           // There was a problem
+           completion(nil, error);
+    }];
+    
+}
+
 - (void)getProfilePicture:(void(^)(NSString *profilePicUrl, NSError *error))completion {
     [self GET:@"1.1/account/verify_credentials.json"
        parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
