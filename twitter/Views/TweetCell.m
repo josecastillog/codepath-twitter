@@ -15,7 +15,9 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    UITapGestureRecognizer *profileTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapUserProfile:)];
+    [self.profileView addGestureRecognizer:profileTapGestureRecognizer];
+    [self.profileView setUserInteractionEnabled:YES];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -40,17 +42,14 @@
     
     NSString *URLString = tweet.user.profilePicture;
     NSURL *url = [NSURL URLWithString:URLString];
-    
-    [self.profileView setImageWithURL:url]; // TODO: Figure out how to use urlData
+    [self.profileView setImageWithURL:url];
     [self.replyButton setTitle:@"" forState:UIControlStateNormal];
     [self.retweetbutton setTitle:@"" forState:UIControlStateNormal];
     [self.likeButton setTitle:@"" forState:UIControlStateNormal];
     [self.messageButton setTitle:@"" forState:UIControlStateNormal];
-    
     NSMutableString *userWithAt = [NSMutableString stringWithString:[@"@" stringByAppendingString:tweet.user.screenName]];
-    
     self.userLabel.text = userWithAt;
-    self.nameLabel.text = tweet.user.name; // TODO: Change label names
+    self.nameLabel.text = tweet.user.name;
     self.tweetLabel.text = tweet.text;
     self.dateLabel.text = [NSDate shortTimeAgoSinceDate:tweet.createdAt]; // TODO: Date Label Not Working
     self.retweetCountLabel.text = [NSString stringWithFormat:@"%d", tweet.retweetCount];
@@ -59,6 +58,10 @@
     self.profileView.layer.cornerRadius = self.profileView.frame.size.height/2;
     self.profileView.layer.borderWidth = 0;
     self.profileView.clipsToBounds = YES;
+}
+
+- (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
+    [self.delegate tweetCell:self didTap:self.tweet.user];
 }
 
 - (IBAction)didTapFavorite:(id)sender {

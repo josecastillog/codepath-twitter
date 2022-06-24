@@ -14,6 +14,7 @@
 @interface ComposeViewController () <UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextView *textField;
 @property (weak, nonatomic) IBOutlet UIImageView *profileView;
+@property (weak, nonatomic) IBOutlet UILabel *characterCountLabel;
 @property (strong, nonatomic) NSString *profilePicUrl;
 @end
 
@@ -46,6 +47,19 @@
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     self.textField.text = @"";
     self.textField.textColor = [UIColor blackColor];
+}
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    // Set the max character limit
+    int characterLimit = 20;
+
+    // Construct what the new text would be if we allowed the user's latest edit
+    NSString *newText = [self.textField.text stringByReplacingCharactersInRange:range withString:text];
+
+    // TODO: Update character count label
+    self.characterCountLabel.text = [NSString stringWithFormat:@"%@/%@", [NSString stringWithFormat:@"%lu", (unsigned long)newText.length], @"280"];
+
+    // Should the new text should be allowed? True/False
+    return newText.length < characterLimit;
 }
 
 - (IBAction)tweet:(id)sender {

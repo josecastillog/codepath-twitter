@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		266579B52863B5FA001C39F9 /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266579B42863B5FA001C39F9 /* ComposeViewController.m */; };
+		2667310B28662C7F00E3626E /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2667310A28662C7F00E3626E /* ProfileViewController.m */; };
 		2670266E28612AAB00C99525 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2670266D28612AAB00C99525 /* Keys.plist */; };
 		267026712861352F00C99525 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 267026702861352F00C99525 /* User.m */; };
 		267026742861361900C99525 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 267026732861361900C99525 /* Tweet.m */; };
@@ -29,6 +30,8 @@
 		1397EA94AE1DE5F26C1724FD /* Pods-twitter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-twitter.release.xcconfig"; path = "Pods/Target Support Files/Pods-twitter/Pods-twitter.release.xcconfig"; sourceTree = "<group>"; };
 		266579B32863B5FA001C39F9 /* ComposeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
 		266579B42863B5FA001C39F9 /* ComposeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
+		2667310928662C7F00E3626E /* ProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		2667310A28662C7F00E3626E /* ProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		2670266D28612AAB00C99525 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		2670266F2861352F00C99525 /* User.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		267026702861352F00C99525 /* User.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
@@ -157,6 +160,8 @@
 				266579B42863B5FA001C39F9 /* ComposeViewController.m */,
 				26A22F0E2864E3C100EF0BC5 /* DetailsViewController.h */,
 				26A22F0F2864E3C100EF0BC5 /* DetailsViewController.m */,
+				2667310928662C7F00E3626E /* ProfileViewController.h */,
+				2667310A28662C7F00E3626E /* ProfileViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -291,6 +296,7 @@
 				6AD2790620BCC0380085BC29 /* LoginViewController.m in Sources */,
 				6AD278DA20BC4B950085BC29 /* AppDelegate.m in Sources */,
 				6AD278F620BCB68B0085BC29 /* APIManager.m in Sources */,
+				2667310B28662C7F00E3626E /* ProfileViewController.m in Sources */,
 				6AD2790920BCC04D0085BC29 /* TimelineViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

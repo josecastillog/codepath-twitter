@@ -14,9 +14,10 @@
 #import "TweetCell.h"
 #import "ComposeViewController.h"
 #import "DetailsViewController.h"
+#import "ProfileViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface TimelineViewController () <UITableViewDataSource, UITableViewDelegate, ComposeViewControllerDelegate, DetailsViewControllerDelegate>
+@interface TimelineViewController () <UITableViewDataSource, UITableViewDelegate, ComposeViewControllerDelegate, DetailsViewControllerDelegate, ProfileViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
@@ -69,6 +70,7 @@
                                                                  forIndexPath:indexPath];
     Tweet *tweet = self.arrayOfTweets[indexPath.row];
     cell.tweet = tweet;
+    cell.delegate = self;
     return cell;
 }
 
@@ -115,6 +117,10 @@
     }];
 }
 
+- (void)tweetCell:(TweetCell *)tweetCell didTap:(User *)user{
+    [self performSegueWithIdentifier:@"profileSegue" sender:user];
+}
+
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -132,6 +138,14 @@
         Tweet *dataToPass = self.arrayOfTweets[indexPath.row];
         detailsController.tweet = dataToPass;
         detailsController.delegate = self;
+    }
+    if ([[segue identifier] isEqualToString:@"profileSegue"]) {
+        UINavigationController *navigationController = [segue destinationViewController];
+        ProfileViewController *profileController = (ProfileViewController*)navigationController.topViewController;
+        // NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+        User *dataToPass = sender;
+        profileController.user = dataToPass;
+        profileController.delegate = self;
     }
 }
 

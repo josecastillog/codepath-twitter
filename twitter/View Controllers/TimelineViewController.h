@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TweetCell.h"
 
-@interface TimelineViewController : UIViewController
+@interface TimelineViewController : UIViewController<TweetCellDelegate>
 @property NSMutableArray *arrayOfTweets;
 @end

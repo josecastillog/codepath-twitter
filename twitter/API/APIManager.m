@@ -76,7 +76,6 @@ static NSString * const baseURLString = @"https://api.twitter.com";
            // There was a problem
            completion(nil, error);
     }];
-    
 }
 
 - (void)postStatusWithText:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion {
@@ -142,6 +141,18 @@ static NSString * const baseURLString = @"https://api.twitter.com";
     }];
 }
 
-
+- (void)getProfileData:(User *)user completion:(void(^)(NSArray *userData, NSError *error))completion {
+    NSDictionary *parameters = @{@"screen_name": user.screenName};
+    [self GET:@"1.1/statuses/user_timeline.json"
+       parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable userData) {
+            // Success
+            // NSDictionary *dictionary = userData;
+            // NSString *profilePicUrl = dictionary[@"profile_image_url_https"];
+            completion(userData, nil);
+       } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+           // There was a problem
+           completion(nil, error);
+    }];
+}
 
 @end
