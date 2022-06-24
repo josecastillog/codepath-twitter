@@ -26,7 +26,6 @@
     // Do any additional setup after loading the view.
     [[APIManager shared] getProfilePicture:^(NSString *profilePicUrl, NSError *error) {
         if (profilePicUrl) {
-            NSLog(@"%@", profilePicUrl);
             NSString *URLString = profilePicUrl;
             NSURL *url = [NSURL URLWithString:URLString];
             self.profileView.layer.backgroundColor=[[UIColor clearColor] CGColor];
@@ -34,8 +33,6 @@
             self.profileView.layer.borderWidth = 0;
             self.profileView.clipsToBounds = YES;
             [self.profileView setImageWithURL:url];
-        } else {
-            NSLog(@"😫😫😫 Error getting profile pic: %@", error.localizedDescription);
         }
     }];
 }
@@ -48,14 +45,13 @@
     self.textField.text = @"";
     self.textField.textColor = [UIColor blackColor];
 }
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     // Set the max character limit
-    int characterLimit = 20;
+    int characterLimit = 280;
 
     // Construct what the new text would be if we allowed the user's latest edit
     NSString *newText = [self.textField.text stringByReplacingCharactersInRange:range withString:text];
-
-    // TODO: Update character count label
     self.characterCountLabel.text = [NSString stringWithFormat:@"%@/%@", [NSString stringWithFormat:@"%lu", (unsigned long)newText.length], @"280"];
 
     // Should the new text should be allowed? True/False
@@ -65,16 +61,11 @@
 - (IBAction)tweet:(id)sender {
     NSString *composedTweet = self.textField.text;
     [[APIManager shared] postStatusWithText:(composedTweet) completion:^(Tweet *tweet, NSError *error) {
-        if(error){
-                NSLog(@"Error composing Tweet: %@", error.localizedDescription);
-        }
-        else{
+        if(!error){
             [self.delegate didTweet:tweet];
-            NSLog(@"Compose Tweet Success!");
         }
         [self dismissViewControllerAnimated:true completion:nil];
     }];
-    
 }
 
 /*

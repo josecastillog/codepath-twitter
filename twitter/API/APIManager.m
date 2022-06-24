@@ -82,7 +82,7 @@ static NSString * const baseURLString = @"https://api.twitter.com";
 
 - (void)getProfilePicture:(void(^)(NSString *profilePicUrl, NSError *error))completion {
     [self GET:@"1.1/account/verify_credentials.json"
-       parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
+       parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionaries) {
             // Success
             NSDictionary *dictionary = tweetDictionaries;
             NSString *profilePicUrl = dictionary[@"profile_image_url_https"];
@@ -96,7 +96,6 @@ static NSString * const baseURLString = @"https://api.twitter.com";
 - (void)postStatusWithText:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion {
     NSString *urlString = @"1.1/statuses/update.json";
     NSDictionary *parameters = @{@"status": text};
-    
     [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
         Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
         completion(tweet, nil);
@@ -134,7 +133,6 @@ static NSString * const baseURLString = @"https://api.twitter.com";
     NSString *urlNoId = @"1.1/statuses/retweet/";
     NSDictionary *parameters = @{@"id": tweet.idStr};
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@", urlNoId, tweet.idStr, @".json"];
-    NSLog(@"%@", urlString);
     [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
         Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
         completion(tweet, nil);

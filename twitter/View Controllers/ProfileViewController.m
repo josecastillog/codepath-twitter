@@ -39,8 +39,6 @@
             self.arrayOfTweets = [NSArray arrayWithArray:tweets];
             [self loadProfile];
             [self.tableView reloadData];
-        } else {
-            NSLog(@"😫😫😫 Error getting user data: %@", error.localizedDescription);
         }
     }];
 }

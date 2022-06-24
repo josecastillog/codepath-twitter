@@ -13,14 +13,12 @@
 @interface APIManager : BDBOAuth1SessionManager
 
 + (instancetype)shared;
-
 - (void)getHomeTimelineWithCompletion:(void(^)(NSArray *tweets, NSError *error))completion;
 - (void)postStatusWithText:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion;
 - (void)favorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion;
 - (void)unfavorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion;
 - (void)retweet:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion;
 - (void)unretweet:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion;
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender;
 - (void)getProfilePicture:(void(^)(NSString *profilePic, NSError *error))completion;
 - (void)getProfileData:(User *)user completion:(void(^)(NSArray *userData, NSError *error))completion;
 - (void)getHomeTimelineWithMoreTweets:(int)count completion:(void(^)(NSArray *tweets, NSError *error))completion;

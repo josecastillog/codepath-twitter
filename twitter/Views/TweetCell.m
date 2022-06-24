@@ -68,11 +68,7 @@
     
     if (self.tweet.favorited == NO) {
         [[APIManager shared] favorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
-             if(error){
-                  NSLog(@"Error favoriting tweet: %@", error.localizedDescription);
-             }
-             else{
-                 NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
+             if(!error){
                  [self.likeButton setImage:[UIImage imageNamed:@"favor-icon-red.png"] forState:UIControlStateNormal];
                  self.tweet.favorited = YES;
                  self.tweet.favoriteCount += 1;
@@ -81,11 +77,7 @@
          }];
     } else {
         [[APIManager shared] unfavorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
-             if(error){
-                  NSLog(@"Error unfavoriting tweet: %@", error.localizedDescription);
-             }
-             else{
-                 NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
+             if(!error){
                  [self.likeButton setImage:[UIImage imageNamed:@"favor-icon.png"] forState:UIControlStateNormal];
                  self.tweet.favorited = NO;
                  self.tweet.favoriteCount -= 1;
@@ -98,11 +90,7 @@
 - (IBAction)didTapRetweet:(id)sender {
     if (self.tweet.retweeted == NO) {
         [[APIManager shared] retweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
-             if(error){
-                  NSLog(@"Error retweeting tweet: %@", error.localizedDescription);
-             }
-             else{
-                 NSLog(@"Successfully retweeting the following Tweet: %@", tweet.text);
+             if(!error){
                  [self.retweetbutton setImage:[UIImage imageNamed:@"retweet-icon-green.png"] forState:UIControlStateNormal];
                  self.tweet.retweeted = YES;
                  self.tweet.retweetCount += 1;
@@ -111,11 +99,7 @@
          }];
     } else {
         [[APIManager shared] unretweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
-             if(error){
-                  NSLog(@"Error unretweeting tweet: %@", error.localizedDescription);
-             }
-             else{
-                 NSLog(@"Successfully unretweeted the following Tweet: %@", tweet.text);
+             if(!error){
                  [self.retweetbutton setImage:[UIImage imageNamed:@"retweet-icon.png"] forState:UIControlStateNormal];
                  self.tweet.retweeted = NO;
                  self.tweet.retweetCount -= 1;

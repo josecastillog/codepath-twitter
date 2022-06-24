@@ -40,18 +40,14 @@
     // Get timeline
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
-            NSLog(@"😎😎😎 Successfully loaded home timeline");
             self.arrayOfTweets = [NSMutableArray arrayWithArray:tweets];
             [self.tableView reloadData];
-        } else {
-            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
         }
     }];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)didTapLogout:(id)sender {
@@ -100,12 +96,9 @@
     if (self.isMoreDataLoading == false) {
         [[APIManager shared] getHomeTimelineWithMoreTweets:(count) completion:^(NSArray *tweets, NSError *error) {
             if (tweets) {
-                NSLog(@"😎😎😎 Successfully loaded home timeline");
                 self.isMoreDataLoading = false;
                 self.arrayOfTweets = [NSMutableArray arrayWithArray:tweets];
                 [self.tableView reloadData];
-            } else {
-                NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
             }
         }];
     }
@@ -114,18 +107,14 @@
 - (void)beginRefresh:(UIRefreshControl *)refreshControl {
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
-            NSLog(@"😎😎😎 Successfully loaded home timeline");
             self.arrayOfTweets = [NSMutableArray arrayWithArray:tweets];
             [self.tableView reloadData];
             [refreshControl endRefreshing];
-        } else {
-            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
         }
     }];
 }
 
 - (void)didTweet:(Tweet *)tweet {
-    NSLog(@"Got called");
     [self.arrayOfTweets insertObject:tweet atIndex:0];
     [self.tableView reloadData];
 }
@@ -133,11 +122,8 @@
 -(void)didFavorite {
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
-            NSLog(@"😎😎😎 Successfully loaded home timeline");
             self.arrayOfTweets = [NSMutableArray arrayWithArray:tweets];
             [self.tableView reloadData];
-        } else {
-            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
         }
     }];
 }
@@ -145,11 +131,8 @@
 -(void)didRetweet {
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
-            NSLog(@"😎😎😎 Successfully loaded home timeline");
             self.arrayOfTweets = [NSMutableArray arrayWithArray:tweets];
             [self.tableView reloadData];
-        } else {
-            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
         }
     }];
 }
@@ -179,7 +162,6 @@
     if ([[segue identifier] isEqualToString:@"profileSegue"]) {
         UINavigationController *navigationController = [segue destinationViewController];
         ProfileViewController *profileController = (ProfileViewController*)navigationController.topViewController;
-        // NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
         User *dataToPass = sender;
         profileController.user = dataToPass;
         profileController.delegate = self;
