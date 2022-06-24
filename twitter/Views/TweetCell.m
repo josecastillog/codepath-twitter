@@ -52,12 +52,17 @@
     self.nameLabel.text = tweet.user.name;
     self.tweetLabel.text = tweet.text;
     self.dateLabel.text = [NSDate shortTimeAgoSinceDate:tweet.createdAt]; // TODO: Date Label Not Working
-    self.retweetCountLabel.text = [NSString stringWithFormat:@"%d", tweet.retweetCount];
-    self.likeCountLabel.text = [NSString stringWithFormat:@"%d", tweet.favoriteCount];
     self.profileView.layer.backgroundColor=[[UIColor clearColor] CGColor];
     self.profileView.layer.cornerRadius = self.profileView.frame.size.height/2;
     self.profileView.layer.borderWidth = 0;
     self.profileView.clipsToBounds = YES;
+    
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc]init];
+    numberFormatter.locale = [NSLocale currentLocale];// this ensures the right separator behavior
+    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    numberFormatter.usesGroupingSeparator = YES;
+    self.retweetCountLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringForObjectValue:[NSNumber numberWithInt:tweet.retweetCount]]];
+    self.likeCountLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringForObjectValue:[NSNumber numberWithInt:tweet.favoriteCount]]];
 }
 
 - (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
@@ -110,8 +115,12 @@
 }
 
 - (void)refreshData {
-    self.retweetCountLabel.text = [NSString stringWithFormat:@"%d", self.tweet.retweetCount];
-    self.likeCountLabel.text = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc]init];
+    numberFormatter.locale = [NSLocale currentLocale];// this ensures the right separator behavior
+    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    numberFormatter.usesGroupingSeparator = YES;
+    self.retweetCountLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringForObjectValue:[NSNumber numberWithInt:self.tweet.retweetCount]]];
+    self.likeCountLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringForObjectValue:[NSNumber numberWithInt:self.tweet.favoriteCount]]];
 }
 
 @end

@@ -49,16 +49,20 @@
     [self.messageButton setTitle:@"" forState:UIControlStateNormal];
     
     NSMutableString *userWithAt = [NSMutableString stringWithString:[@"@" stringByAppendingString:self.tweet.user.screenName]];
-    
     self.userLabel.text = userWithAt;
     self.nameLabel.text = self.tweet.user.name; // TODO: Change label names
     self.tweetLabel.text = self.tweet.text;
-    self.retweetLabel.text = [NSString stringWithFormat:@"%d", self.tweet.retweetCount];
-    self.likesLabel.text = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
     self.profileView.layer.backgroundColor=[[UIColor clearColor] CGColor];
     self.profileView.layer.cornerRadius = self.profileView.frame.size.height/2;
     self.profileView.layer.borderWidth = 0;
     self.profileView.clipsToBounds = YES;
+    
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc]init];
+    numberFormatter.locale = [NSLocale currentLocale];// this ensures the right separator behavior
+    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    numberFormatter.usesGroupingSeparator = YES;
+    self.retweetLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringForObjectValue:[NSNumber numberWithInt:self.tweet.retweetCount]]];
+    self.likesLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringForObjectValue:[NSNumber numberWithInt:self.tweet.favoriteCount]]];
 }
 
 - (IBAction)backButton:(id)sender {
@@ -114,8 +118,12 @@
 }
 
 - (void)refreshData {
-    self.retweetLabel.text = [NSString stringWithFormat:@"%d", self.tweet.retweetCount];
-    self.likesLabel.text = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc]init];
+    numberFormatter.locale = [NSLocale currentLocale];// this ensures the right separator behavior
+    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    numberFormatter.usesGroupingSeparator = YES;
+    self.retweetLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringForObjectValue:[NSNumber numberWithInt:self.tweet.retweetCount]]];
+    self.likesLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringForObjectValue:[NSNumber numberWithInt:self.tweet.favoriteCount]]];
 }
 
 /*
