@@ -44,8 +44,12 @@
 }
 
 -(void)loadProfile {
-    self.followersCountLabel.text = [NSString stringWithFormat:@"%@", self.profileInfo[@"followers_count"]];
-    self.followingCountLabel.text = [NSString stringWithFormat:@"%@", self.profileInfo[@"friends_count"]];
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc]init];
+    numberFormatter.locale = [NSLocale currentLocale];// this ensures the right separator behavior
+    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    numberFormatter.usesGroupingSeparator = YES;
+    self.followersCountLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringForObjectValue:self.profileInfo[@"followers_count"]]];
+    self.followingCountLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringForObjectValue:self.profileInfo[@"friends_count"]]];
     self.profileView.layer.cornerRadius = self.profileView.frame.size.height/2;
     self.profileView.layer.borderWidth = 0;
     self.profileView.clipsToBounds = YES;
